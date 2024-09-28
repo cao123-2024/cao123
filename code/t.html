@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>贪吃蛇游戏</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #fff; /* 背景改成白色 */
+        }
+        nav {
+            width: 100%;
+            background-color: #0078D4; /* Windows蓝色 */
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 15px;
+            margin: 0 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #005A9E;
+        }
+        canvas {
+            background-color: #fff; /* 背景改成白色 */
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="HTML.html">首页</a>
+    </nav>
+    <canvas id="gameCanvas" width="800" height="800"></canvas> <!-- 范围扩大 -->
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const grid = 20;
+        let count = 0;
+
+        const snake = {
+            x: 400,
+            y: 400,
+            dx: grid,
+            dy: 0,
+            cells: [],
+            maxCells: 4
+        };
+
+        const apples = [
+            { x: 420, y: 420 },
+            { x: 460, y: 460 }
+        ];
+
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+        function loop() {
+            requestAnimationFrame(loop);
+
+            if (++count < 12) { // 减小速度
+                return;
+            }
+
+            count = 0;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            snake.x += snake.dx;
+            snake.y += snake.dy;
+
+            if (snake.x < 0) {
+                snake.x = canvas.width - grid;
+            } else if (snake.x >= canvas.width) {
+                snake.x = 0;
+            }
+
+            if (snake.y < 0) {
+                snake.y = canvas.height - grid;
+            } else if (snake.y >= canvas.height) {
+                snake.y = 0;
+            }
+
+            snake.cells.unshift({ x: snake.x, y: snake.y });
+
+            if (snake.cells.length > snake.maxCells) {
+                snake.cells.pop();
+            }
+
+            ctx.fillStyle = 'red';
+            apples.forEach(function(apple) {
+                ctx.fillRect(apple.x, apple.y, grid - 1, grid - 1);
+            });
+
+            ctx.fillStyle = 'blue'; // 贪吃蛇改成蓝色
+            snake.cells.forEach(function (cell, index) {
+                ctx.fillRect(cell.x, cell.y, grid - 1, grid - 1);
+
+                apples.forEach(function(apple, appleIndex) {
+                    if (cell.x === apple.x && cell.y === apple.y) {
+                        snake.maxCells++;
+                        apple.x = getRandomInt(0, 40) * grid; // 范围扩大
+                        apple.y = getRandomInt(0, 40) * grid; // 范围扩大
+                    }
+                });
+
+                for (let i = index + 1; i < snake.cells.length; i++) {
+                    if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
+                        snake.x = 400;
+                        snake.y = 400;
+                        snake.cells = [];
+                        snake.maxCells = 4;
+                        snake.dx = grid;
+                        snake.dy = 0;
+
+                        apples.forEach(function(apple) {
+                            apple.x = getRandomInt(0, 40) * grid; // 范围扩大
+                            apple.y = getRandomInt(0, 40) * grid; // 范围扩大
+                        });
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('keydown', function (e) {
+            if (e.which === 37 && snake.dx === 0) {
+                snake.dx = -grid;
+                snake.dy = 0;
+            } else if (e.which === 38 && snake.dy === 0) {
+                snake.dy = -grid;
+                snake.dx = 0;
+            } else if (e.which === 39 && snake.dx === 0) {
+                snake.dx = grid;
+                snake.dy = 0;
+            } else if (e.which === 40 && snake.dy === 0) {
+                snake.dy = grid;
+                snake.dx = 0;
+            }
+        });
+
+        requestAnimationFrame(loop);
+    </script>
+</body>
+</html>

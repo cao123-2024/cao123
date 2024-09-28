@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows + c++ 官方网站</title>
+    <style>
+        :root {
+            --main-color: #E3F2FD;
+            --accent-color: #0078D4; /* Windows蓝色 */
+            --text-color: #333;
+            --background-color: #F0F8FF; /* 淡蓝色背景 */
+            --section-bg-color: #FFFFFF;
+        }
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        nav {
+            background-color: var(--accent-color);
+            padding: 10px 20px;
+            text-align: left;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 15px;
+            margin: 0 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #005A9E;
+        }
+        .hero {
+            background-color: var(--main-color);
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .hero h1 {
+            color: var(--accent-color);
+            margin: 0 0 20px 0;
+            font-size: 2.5em;
+        }
+        .profile {
+            display: flex;
+            align-items: center;
+        }
+        .profile-image {
+            width: 50px; /* 调整宽度 */
+            height: 50px; /* 调整高度 */
+            margin-right: 10px; /* 右边距 */
+            display: block;
+            margin: 0 auto;
+            transition: transform 0.3s ease;
+        }
+        .profile-image:hover {
+            transform: scale(1.05);
+        }
+        .profile h2 {
+            margin: 0;
+            font-size: 1.2em;
+            color: var(--accent-color);
+        }
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        section {
+            background-color: var(--section-bg-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        section:hover {
+            transform: translateY(-5px);
+        }
+        h2 {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--main-color);
+            padding-bottom: 10px;
+        }
+        footer {
+            background-color: #0078D4; /* Windows蓝色 */
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+            display: none; /* 初始隐藏 */
+        }
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .carousel {
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-track img {
+            width: 100%;
+            height: 400px; /* 调整高度 */
+            object-fit: cover; /* 保持图片比例 */
+            flex-shrink: 0;
+        }
+        .hero {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .profile {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            display: block;
+            margin: 0 auto;
+        }
+        .project-display {
+            width: 100px;
+            height: 100px;
+            background-color: #f0f0f0; /* 示例背景色 */
+            border: 1px solid #ccc;
+            text-align: center;
+            line-height: 100px;
+            cursor: pointer;
+        }
+        .modal {
+            display: none; /* 隐藏模态框 */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4); /* 半透明背景 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 300px; /* 固定宽度 */
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* 添加阴影 */
+            animation: fadeIn 0.3s; /* 添加淡入动画 */
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="HTML.html" onclick="return navigateToHome()">首页</a>
+        <a href="fu.html" target="_blank">AI聊天</a> <!-- 在新窗口/标签页中打开 -->
+        <a href="#projects">项目展示</a>
+        <a href="#contact">联系方式</a>
+    </nav>
+
+    <div class="header">
+        <img src="H:/Windows10-11 V7.1.2/Windows-HTML/code/image/tp.jpg" alt="" class="profile-image" id="profile-image">
+        <h1>Windows + c++ 官方网站</h1>
+    </div>
+
+    <p>欢迎来到我的官方网站。这里是我展示个人作品、分享技术见解的地方。希望能为大家带来有价值的内容。</p>
+
+    <div class="carousel">
+        <div class="carousel-track">
+            <img src="https://via.placeholder.com/800x400?text=Image+1" alt="Image 1">
+            <img src="https://via.placeholder.com/800x400?text=Image+2" alt="Image 2">
+            <img src="https://via.placeholder.com/800x400?text=Image+3" alt="Image 3">
+        </div>
+    </div>
+
+    
+
+    <main>
+        <section id="projects">
+            <h2>项目展示</h2>
+            <ul>
+                <li>Windows桌面应用开发工具包</li>
+                <li>C++性能优化库</li>
+                <li>跨平台GUI框架</li>
+                <li>实时数据处理系统</li>
+            </ul>
+        </section>
+
+        <section id="contact">
+            <h2>联系方式</h2>
+            <p>邮箱：<a href="mailto:cao123_2024@qq.com">cao123_2024@qq.com</a></p>
+            <p>抖音：<a href="https://www.douyin.com/user/self?from_tab_name=main&showTab=post" target="_blank">Windows + c++</a></p>
+        </section>
+    </main>
+
+    <div class="project-display" onclick="showResourceMessage()">
+        <!-- 删除了项目展示的文字 -->
+    </div>
+
+    <footer id="footer">
+        <p>&copy; 2024 Windows + c++ 官方网站. 版权所有.</p>
+        <p>
+            邮箱：<a href="mailto:cao123_2024@qq.com">cao123_2024@qq.com</a> |
+            抖音：<a href="https://www.douyin.com/user/self?from_tab_name=main&showTab=post" target="_blank">Windows + c++</a> |
+            红书：<a href="https://www.xiaohongshu.com/user/self?from_tab_name=main&showTab=post" target="_blank">Windows + c++</a> |
+            哔哩哔哩：<a href="https://space.bilibili.com/3546659092957985?spm_id_from=333.337.0.0" target="_blank">Windows + c++</a> |
+            GitHub：<a href="https://github.com/your_github_username" target="_blank">Windows + c++</a>
+        </p>
+    </footer>
+
+    <!-- 添加一个模态框用于显示提示消息 -->
+    <div id="resourceModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeResourceMessage()">&times;</span>
+            <p>资源未开放</p>
+        </div>
+    </div>
+
+    <!-- 引用 JavaScript 文件 -->
+    <script src="script.js"></script>
+
+    <script>
+        function navigateToHome() {
+            window.location.href = 'HTML.html';
+            return false; // Prevent default link behavior
+        }
+
+        // 自动滑动图片轮播
+        const track = document.querySelector('.carousel-track');
+        const images = Array.from(track.children);
+        let currentIndex = 0;
+
+        function setPositionByIndex() {
+            track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        function showNextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            setPositionByIndex();
+        }
+
+        function startAutoSlide() {
+            setInterval(showNextImage, 3000); // 每3秒切换一次图片
+        }
+
+        startAutoSlide();
+
+        // 添加点击事件监听器到头像
+        document.getElementById('profile-image').addEventListener('click', function() {
+            alert('激活了小彩蛋！');
+            window.open('t.html', '_blank');
+        });
+
+        // 使用 Intersection Observer API 显示页脚
+        const footer = document.getElementById('footer');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    footer.style.display = 'block';
+                } else {
+                    footer.style.display = 'none';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        observer.observe(document.querySelector('main'));
+
+        // 添加模态框显示和关闭函数
+        function showResourceMessage() {
+            document.getElementById('resourceModal').style.display = 'flex';
+        }
+
+        function closeResourceMessage() {
+            document.getElementById('resourceModal').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.getElementById('resourceModal').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
